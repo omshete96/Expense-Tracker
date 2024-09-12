@@ -7,11 +7,12 @@ public class ExpenseTracker {
 
     public static void main(String[] args) {
         while (true) {
-            System.out.println("Expense Tracker");
+            System.out.println("\nExpense Tracker");
             System.out.println("1. Add Expense");
             System.out.println("2. View Expenses");
             System.out.println("3. View Total Expenses");
-            System.out.println("4. Exit");
+            System.out.println("4. Remove Expense");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();  // Consume newline
@@ -27,6 +28,9 @@ public class ExpenseTracker {
                     viewTotalExpenses();
                     break;
                 case 4:
+                    removeExpense();
+                    break;
+                case 5:
                     System.out.println("Exiting...");
                     return;
                 default:
@@ -50,8 +54,8 @@ public class ExpenseTracker {
             System.out.println("No expenses recorded.");
         } else {
             System.out.println("Expenses:");
-            for (Expense expense : expenses) {
-                System.out.println(expense);
+            for (int i = 0; i < expenses.size(); i++) {
+                System.out.println((i + 1) + ". " + expenses.get(i));
             }
         }
     }
@@ -62,6 +66,24 @@ public class ExpenseTracker {
             total += expense.getAmount();
         }
         System.out.println("Total Expenses: $" + total);
+    }
+
+    private static void removeExpense() {
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses to remove.");
+            return;
+        }
+        viewExpenses();  // Show current expenses with index
+        System.out.print("Enter the index of the expense to remove: ");
+        int index = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+
+        if (index > 0 && index <= expenses.size()) {
+            expenses.remove(index - 1);  // Remove the expense at the given index
+            System.out.println("Expense removed successfully.");
+        } else {
+            System.out.println("Invalid index. Please try again.");
+        }
     }
 }
 
